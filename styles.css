@@ -1,0 +1,6 @@
+.aven-breather{display:flex;flex-direction:column;align-items:center;gap:16px;padding:20px 12px}
+.aven-breather-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.aven-breather-circle{width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 35% 35%,var(--interactive-accent),transparent 140%);opacity:.85;transition:transform .12s linear}
+.aven-breather-phase{font-size:1.15em;color:var(--text-normal);letter-spacing:.04em}
+.aven-breather-time{color:var(--text-muted);font-variant-numeric:tabular-nums}
+.aven-breather-buttons{display:flex;gap:8px}
