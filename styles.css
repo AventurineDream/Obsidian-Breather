@@ -1,6 +1,37 @@
+/*
+ * Breather panel styles. main.js scales .aven-breather-figure as a whole
+ * (0.55 exhaled → 1 inhaled); every figure inside is static geometry, so the
+ * only motion is that scale. Colours come from the theme's accent variables
+ * (Obsidian ≥ 1.0), so the figures follow light/dark mode and accent colour.
+ */
 .aven-breather{display:flex;flex-direction:column;align-items:center;gap:16px;padding:20px 12px}
 .aven-breather-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
-.aven-breather-circle{width:150px;height:150px;border-radius:50%;background:radial-gradient(circle at 35% 35%,var(--interactive-accent),transparent 140%);opacity:.85;transition:transform .12s linear}
 .aven-breather-phase{font-size:1.15em;color:var(--text-normal);letter-spacing:.04em}
 .aven-breather-time{color:var(--text-muted);font-variant-numeric:tabular-nums}
 .aven-breather-buttons{display:flex;gap:8px}
+.aven-breather-invalid{border-color:var(--text-error) !important}
+
+/* Stage reserves room for the largest figure (planet ring overhangs ~8%). */
+.aven-breather-stage{width:190px;height:190px;display:flex;align-items:center;justify-content:center}
+/* Transition slightly longer than the 100 ms tick so the steps blend into a smooth size change. */
+.aven-breather-figure{position:relative;width:160px;height:160px;transition:transform .12s linear;will-change:transform}
+.aven-breather-figure>*{position:absolute;box-sizing:border-box}
+
+/* Circle */
+.aven-breather-circle{inset:0;border-radius:50%;background:radial-gradient(circle at 35% 35%,var(--interactive-accent),transparent 140%);opacity:.85}
+
+/* Planet: shaded sphere with a tilted ring. The ring is drawn twice — the back
+   ellipse under the sphere and the lower half again on top — so the sphere
+   sits inside the ring. */
+.aven-breather-planet{inset:18%;border-radius:50%;background:radial-gradient(circle at 34% 30%,var(--color-accent-2,var(--interactive-accent)) 0%,var(--interactive-accent) 48%,var(--background-modifier-border) 120%);box-shadow:inset -12px -10px 22px rgba(0,0,0,.35),0 0 24px -6px var(--interactive-accent)}
+.aven-breather-ring{left:-4%;right:-4%;top:41%;height:18%;border-radius:50%;border:5px solid var(--color-accent-1,var(--interactive-accent));opacity:.7;transform:rotate(-16deg)}
+.aven-breather-ring-front{clip-path:inset(50% 0 0 0)}
+
+/* Mandala: a ring of 12 long petals, 8 shorter ones offset between them, a
+   faint halo and a core. Each petal's angle comes from --aven-breather-turn. */
+.aven-breather-mandala-halo{inset:2%;border-radius:50%;border:1px dashed var(--interactive-accent);opacity:.5}
+.aven-breather-petal{left:50%;top:50%;border-radius:50%;transform-origin:50% 100%;transform:rotate(var(--aven-breather-turn,0deg));border:1px solid var(--interactive-accent)}
+/* margin-top equals -height (percentages of the square figure) so each petal's base sits on the centre. */
+.aven-breather-petal.is-outer{width:18%;height:46%;margin-left:-9%;margin-top:-46%;background:linear-gradient(to top,transparent,var(--interactive-accent));opacity:.45}
+.aven-breather-petal.is-inner{width:16%;height:30%;margin-left:-8%;margin-top:-30%;background:linear-gradient(to top,transparent,var(--color-accent-2,var(--interactive-accent)));opacity:.75}
+.aven-breather-mandala-core{inset:40%;border-radius:50%;background:radial-gradient(circle at 40% 40%,var(--color-accent-2,var(--interactive-accent)),var(--interactive-accent))}
